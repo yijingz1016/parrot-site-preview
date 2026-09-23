@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Parrot · Art &amp; Design Foundation 鹦鹉艺术设计基金会</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Italianno&family=Jost:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/favicon-512.png">
+<style>
+:root{
+  --paper:#EAE6DB; --paper-2:#F1EEE5; --paper-3:#E2DCCE;
+  --ink:#211E19; --ink-soft:#4B443A; --muted:#8B8172;
+  --mauve:#C7B2A3; --mauve-deep:#A58A77; --mauve-tint:#D9CBC0;
+  --olive:#6E6A5A;
+  --line:rgba(33,30,25,.16);
+  --serif:'Cormorant Garamond','Noto Serif SC',serif;
+  --sans:'Jost','Noto Serif SC',sans-serif;
+  --script:'Italianno',cursive;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased}
+::selection{background:var(--mauve);color:var(--ink)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  padding:22px 4vw;transition:all .4s ease}
+.nav.scrolled{background:rgba(234,230,219,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:12px 4vw}
+.nav-logo{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:.34em;text-transform:uppercase}
+.nav-logo span{color:var(--mauve-deep)}
+.nav-links{display:flex;gap:34px;font-family:var(--sans);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:400}
+.nav-links a{position:relative;padding:4px 0;color:var(--ink-soft);transition:color .3s}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--mauve-deep);transition:width .35s}
+.nav-links a:hover::after{width:100%}
+.nav-links .zh{display:block;font-size:10px;color:var(--muted);letter-spacing:.3em}
+@media(max-width:900px){.nav-links{display:none}}
+.nav-burger{display:none;background:none;border:none;cursor:pointer;padding:10px;margin:-10px;z-index:110}
+.nav-burger span{display:block;width:24px;height:1.5px;background:var(--ink);margin:6px 0;transition:transform .35s ease,opacity .35s ease}
+.nav-mobile{visibility:hidden;position:fixed;top:0;right:0;bottom:0;width:min(78vw,340px);z-index:105;background:var(--paper-2);
+  border-left:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:90px 34px 40px;
+  transform:translateX(100%);transition:transform .45s ease;box-shadow:-18px 0 50px rgba(33,30,25,.12)}
+.nav-mobile.open{transform:translateX(0)}
+.nav-mobile a{font-family:var(--sans);font-size:15px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+  padding:13px 0;border-bottom:1px solid var(--line)}
+.nav-mobile a .zh{display:block;font-size:10px;color:var(--muted);letter-spacing:.3em;margin-top:3px}
+.nav-mobile .nav-cover-link{color:var(--mauve-deep);border-bottom:1px solid var(--mauve)}
+@media(max-width:900px){
+  .nav-burger{display:block}
+  .nav-mobile{visibility:visible}
+  .nav.scrolled .nav-burger span,.nav:not(.scrolled) .nav-burger span{background:var(--ink)}
+  body.nav-open .nav-burger span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  body.nav-open .nav-burger span:nth-child(2){opacity:0}
+  body.nav-open .nav-burger span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  body.nav-open{overflow:hidden}
+}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:pan-y}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.82) brightness(.92)}
+.hero-slides{position:absolute;inset:0;overflow:hidden;touch-action:pan-y;user-select:none}
+.hero .hero-slide{opacity:0;transform:scale(1.025);transition:opacity 1s ease-in-out,transform 7s ease-out;pointer-events:none}
+.hero .hero-slide.is-active{opacity:1;transform:scale(1);pointer-events:auto}
+.hero .hero-slide:nth-child(2){object-position:center 58%}
+.hero .hero-slide:nth-child(3){object-position:center 52%}
+.hero .hero-slide:nth-child(4){object-position:center 48%}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(234,230,219,.32) 0%,rgba(234,230,219,.05) 40%,rgba(33,30,25,.42) 100%)}
+.hero-inner{position:relative;z-index:2;text-align:center;color:#F5F2E9;pointer-events:none}
+.hero-kicker{font-family:var(--sans);font-weight:300;font-size:10px;line-height:1.65;letter-spacing:.42em;text-transform:uppercase;margin-bottom:25px;opacity:.9}
+.hero-brand{display:block;font-size:14px;font-weight:500;letter-spacing:.48em;margin:0 -.48em 7px 0}
+.hero-title{font-family:var(--serif);font-weight:500;font-size:clamp(54px,8vw,108px);line-height:.98;letter-spacing:.025em;text-shadow:0 2px 30px rgba(33,30,25,.35)}
+.hero-title span{display:block}
+.hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(16px,1.8vw,21px);margin-top:22px;letter-spacing:.18em}
+.hero-script{font-family:var(--script);font-size:clamp(30px,3.4vw,46px);margin-top:34px;color:#EFE8D8}
+.hero-arrow{position:absolute;top:50%;z-index:3;width:56px;height:72px;transform:translateY(-50%);border:0;background:transparent;color:rgba(245,242,233,.86);font-family:var(--serif);font-size:42px;font-weight:300;cursor:pointer;transition:color .25s ease,background .25s ease}
+.hero-arrow:hover,.hero-arrow:focus-visible{color:#fff;background:rgba(33,30,25,.14);outline:none}
+.hero-prev{left:14px}.hero-next{right:14px}
+.hero-dots{position:absolute;left:50%;bottom:34px;z-index:3;display:flex;gap:11px;transform:translateX(-50%)}
+.hero-dot{width:28px;height:20px;padding:9px 0;border:0;background:transparent;cursor:pointer}
+.hero-dot::before{content:"";display:block;width:100%;height:1px;background:rgba(245,242,233,.45);transition:background .3s ease,transform .3s ease}
+.hero-dot.is-active::before{background:#F5F2E9;transform:scaleY(2)}
+.hero-scroll{position:absolute;bottom:34px;right:34px;z-index:2;font-family:var(--sans);font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:rgba(245,242,233,.85)}
+.hero-scroll::after{content:"";display:block;width:1px;height:44px;background:rgba(245,242,233,.6);margin:12px auto 0;animation:drop 2.2s ease infinite}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- shared section chrome ---------- */
+.section{padding:110px 6vw}
+.eyebrow{font-family:var(--script);font-size:clamp(30px,3vw,42px);color:var(--mauve-deep);line-height:1}
+.sec-head{display:flex;align-items:baseline;gap:26px;flex-wrap:wrap;margin-bottom:14px}
+.sec-title{font-family:var(--serif);font-weight:500;font-size:clamp(30px,4vw,52px);letter-spacing:.16em;text-transform:uppercase;line-height:1.15}
+.sec-title .zh{display:block;font-size:.52em;letter-spacing:.5em;color:var(--ink-soft);margin-top:10px;font-weight:400}
+.sec-rule{flex:1;height:1px;background:var(--line);min-width:60px;margin-bottom:12px}
+.sec-lede{max-width:640px;color:var(--ink-soft);font-size:16px;margin:18px 0 0}
+.sec-lede em{font-style:italic;color:var(--ink)}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;margin-top:56px;align-items:start}
+.about-text p{margin-bottom:20px;color:var(--ink-soft)}
+.about-text p:first-child{font-size:19px;color:var(--ink)}
+
+.about-figures{display:flex;flex-direction:column;gap:40px}
+.about-figure{position:relative;margin:0}
+.about-figure img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.about-figure figcaption{font-family:var(--sans);font-size:11px;letter-spacing:.14em;color:var(--muted);margin-top:12px;text-transform:uppercase;text-align:center;line-height:1.8}
+.about-figure::before{content:"";position:absolute;top:-14px;right:-14px;width:100px;height:100px;border:1px solid var(--mauve);z-index:-1}
+.about-sub{border-top:1px solid var(--line);padding-top:28px}
+
+/* ---------- mythology ---------- */
+.myth{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.myth-grid{display:grid;grid-template-columns:1fr 1fr;margin-top:56px}
+.myth-cell{padding:56px 48px;position:relative}
+.myth-cell:first-child{border-right:1px solid var(--line)}
+.myth-cell .tag{font-family:var(--sans);font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--mauve-deep);margin-bottom:18px}
+.myth-cell h3{font-size:clamp(24px,2.6vw,34px);font-weight:500;letter-spacing:.06em;line-height:1.3;margin-bottom:8px}
+.myth-cell .zh-t{font-size:15px;color:var(--muted);letter-spacing:.35em;margin-bottom:22px}
+.myth-cell p{color:var(--ink-soft);font-size:16px}
+.myth-quote{margin-top:30px;font-family:var(--script);font-size:34px;color:var(--mauve-deep)}
+</style>
+</head>
+<body>
+
+<style>
+/* ---------- journey timeline ---------- */
+.journey{position:relative}
+.journey::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line)}
+.j-item{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:110px;position:relative}
+.j-item:last-child{margin-bottom:0}
+.j-year{position:absolute;left:50%;top:6px;transform:translateX(-50%);font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:.22em;color:var(--paper);background:var(--mauve-deep);padding:5px 16px 4px;border-radius:99px;z-index:2}
+.j-img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.j-img.landscape{aspect-ratio:4/3}
+.j-body{padding:8px 56px;display:flex;flex-direction:column;justify-content:center}
+.j-item:nth-child(odd) .j-body{padding-left:calc(6vw + 56px)}
+.j-item:nth-child(even) .j-body{grid-column:1;padding-right:calc(6vw + 56px);text-align:right;align-items:flex-end}
+.j-item:nth-child(even) .j-img{grid-column:2;grid-row:1}
+.j-body h3{font-size:clamp(22px,2.4vw,30px);font-weight:500;letter-spacing:.05em;line-height:1.35;margin-bottom:4px}
+.j-body .zh-t{font-size:14px;color:var(--muted);letter-spacing:.3em;margin-bottom:16px}
+.j-body p{color:var(--ink-soft);font-size:15.5px}
+@media(max-width:900px){
+  .journey::before{left:12px}
+  .j-item,.j-item:nth-child(even){grid-template-columns:1fr}
+  .j-item:nth-child(even) .j-body{grid-column:1;grid-row:2;text-align:left;align-items:flex-start;padding:24px 0 0 28px}
+  .j-item:nth-child(even) .j-img{grid-column:1;grid-row:1}
+  .j-body{padding:24px 0 0 28px}
+  .j-year{left:12px;transform:translateX(0)}
+}
+
+/* ---------- exhibitions ---------- */
+.exhibitions{background:var(--mauve-tint);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ex-intro{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;margin-top:50px;align-items:center}
+.ex-intro-img{position:relative}
+.ex-intro-img img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.ex-intro p{color:var(--ink-soft);font-size:16.5px}
+.ex-intro p+p{margin-top:14px}
+.ex-series-title{font-family:var(--script);font-size:clamp(40px,4.5vw,60px);color:var(--mauve-deep);margin:90px 0 6px;line-height:1}
+.ex-series-sub{font-family:var(--sans);font-size:12px;letter-spacing:.4em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:46px}
+
+/* filter pills */
+.ex-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px}
+.pill{font-family:var(--sans);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:8px 18px;border:1px solid var(--line);border-radius:99px;background:transparent;color:var(--ink-soft);cursor:pointer;transition:all .3s}
+.pill:hover{border-color:var(--mauve-deep)}
+.pill.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* exhibition cards */
+.ex-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+.ex-card{cursor:pointer;transition:transform .45s ease, opacity .4s;position:relative}
+.ex-card:hover{transform:translateY(-6px)}
+.ex-card.hidden{display:none}
+.ex-thumb{overflow:hidden;position:relative}
+.ex-thumb img{width:100%;aspect-ratio:3/3.6;object-fit:cover;transition:transform .8s ease,filter .5s}
+.ex-card:hover .ex-thumb img{transform:scale(1.05);filter:brightness(1.04)}
+.ex-year{position:absolute;top:14px;right:14px;font-family:var(--sans);font-size:11px;letter-spacing:.18em;background:rgba(234,230,219,.92);padding:4px 12px;border-radius:99px}
+.ex-info{padding:20px 2px 0;border-bottom:1px solid transparent}
+.ex-info h3{font-size:21px;font-weight:500;letter-spacing:.04em;line-height:1.35}
+.ex-info .zh-t{font-size:13px;color:var(--muted);letter-spacing:.22em;margin-top:3px}
+.ex-meta{display:flex;gap:14px;margin-top:10px;font-family:var(--sans);font-size:11.5px;color:var(--muted);letter-spacing:.06em;flex-wrap:wrap}
+.ex-meta .venue{color:var(--mauve-deep)}
+@media(max-width:1000px){.ex-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.ex-grid{grid-template-columns:1fr}}
+
+/* exhibition overlay */
+.ex-overlay{position:fixed;inset:0;z-index:200;background:rgba(33,30,25,.55);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:4vh 4vw;opacity:0;pointer-events:none;transition:opacity .4s}
+.ex-overlay.open{opacity:1;pointer-events:auto}
+.ex-modal{background:var(--paper);max-width:1060px;width:100%;max-height:92vh;overflow-y:auto;position:relative;display:grid;grid-template-columns:1.05fr .95fr}
+.ex-modal-img{min-height:320px}
+.ex-modal-img img{width:100%;height:100%;object-fit:cover}
+.ex-modal-body{padding:52px 48px}
+.ex-modal-body h3{font-size:30px;font-weight:500;letter-spacing:.05em;line-height:1.25}
+.ex-modal-body .zh-t{font-size:15px;color:var(--muted);letter-spacing:.3em;margin:6px 0 22px}
+.ex-modal-body .meta-line{font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--mauve-deep);margin-bottom:26px}
+.ex-modal-body p{color:var(--ink-soft);font-size:15.5px}
+.ex-modal-body .artists{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--sans);font-size:12.5px;line-height:2;color:var(--ink-soft);letter-spacing:.05em}
+.ex-modal-body .artists b{font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:10.5px;color:var(--muted);display:block;margin-bottom:4px}
+.ex-modal-gallery{display:none;grid-column:1/-1;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 48px 48px}
+.ex-modal-gallery.has-images{display:grid}
+.ex-modal-gallery img{width:100%;height:100%;aspect-ratio:4/3;object-fit:cover}
+.ex-modal-gallery img.poster{grid-row:span 2;aspect-ratio:3/4}
+.ex-close{position:absolute;top:14px;right:16px;font-family:var(--sans);font-size:13px;letter-spacing:.1em;background:var(--ink);color:var(--paper);border:none;padding:8px 16px;cursor:pointer;z-index:3}
+@media(max-width:800px){
+  .ex-modal{grid-template-columns:1fr}
+  .ex-modal-img{max-height:38vh}
+  .ex-modal-body{padding:30px 24px}
+  .ex-modal-gallery{grid-template-columns:1fr;gap:10px;padding:0 0 32px}
+  .ex-modal-gallery img,.ex-modal-gallery img.poster{grid-row:auto;aspect-ratio:auto;height:auto}
+}
+</style>
+
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#top">The <span>Parrot</span></a>
+  <div class="nav-links">
+    <a href="#about">About <span class="zh">关于</span></a>
+    <a href="#journey">Journey <span class="zh">历程</span></a>
+    <a href="#exhibitions">Exhibitions <span class="zh">展览</span></a>
+    <a href="#charity">Philanthropy <span class="zh">公益</span></a>
+    <a href="#urban">Urban Renewal <span class="zh">城市更新</span></a>
+    <a href="#collection">Collection <span class="zh">馆藏</span></a>
+  </div>
+  <button class="nav-burger" id="navBurger" aria-label="Menu 菜单" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#top" class="nav-cover-link">Cover <span class="zh">封面</span></a>
+  <a href="#about">About <span class="zh">关于</span></a>
+  <a href="#journey">Journey <span class="zh">历程</span></a>
+  <a href="#exhibitions">Exhibitions <span class="zh">展览</span></a>
+  <a href="#charity">Philanthropy <span class="zh">公益</span></a>
+  <a href="#urban">Urban Renewal <span class="zh">城市更新</span></a>
+  <a href="#collection">Collection <span class="zh">馆藏</span></a>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-slides" id="heroSlides">
+    <img class="hero-slide is-active" src="assets/hero.jpg" alt="The Parrot exhibition space" aria-hidden="false">
+    <img class="hero-slide" src="assets/hero-gallery-chair.jpg" alt="Gallery interior with painting and sculptural chair" aria-hidden="true">
+    <img class="hero-slide" src="assets/hero-gallery-glass.jpg" alt="Glass artworks in the gallery" aria-hidden="true">
+    <img class="hero-slide" src="assets/hero-gallery-sculpture.jpg" alt="Colourful sculptural artwork by a gallery window" aria-hidden="true">
+  </div>
+  <div class="hero-inner">
+    <div class="hero-kicker"><span class="hero-brand">The Parrot</span>Art &amp; Design Foundation · 鹦鹉艺术设计基金会</div>
+    <h1 class="hero-title"><span>Let Life</span><span>Be Inspired</span></h1>
+    <p class="hero-sub">灵感唤醒生活</p>
+    <p class="hero-script">Journey of The Parrot</p>
+  </div>
+  <button class="hero-arrow hero-prev" type="button" aria-label="Previous hero image">‹</button>
+  <button class="hero-arrow hero-next" type="button" aria-label="Next hero image">›</button>
+  <div class="hero-dots" aria-label="Choose hero image">
+    <button class="hero-dot is-active" type="button" aria-label="Show hero image 1" aria-current="true"></button>
+    <button class="hero-dot" type="button" aria-label="Show hero image 2"></button>
+    <button class="hero-dot" type="button" aria-label="Show hero image 3"></button>
+    <button class="hero-dot" type="button" aria-label="Show hero image 4"></button>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</header>
+
+<section class="section" id="about">
+  <p class="eyebrow">About Our Journey</p>
+  <div class="sec-head">
+    <h2 class="sec-title">The Parrot<span class="zh">关于我们</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>鹦鹉空间（2018年成立于上海）以自由流动的精神探索艺术与设计的多元可能，专注历史保护建筑及不同空间语境下的设计实践，关注城市更新与可持续发展。</p>
+      <p>2024年于香港设立艺术文化设计发展基金会，支持全球当代艺术家、设计师与策展人，围绕灵性探索、女性成长等议题推动展览与收藏体系建设，并通过公益项目拓展社会影响力。2025年在纽约设立首个海外联络处，开启国际艺术设计对话与交流合作。</p>
+      <p>The Parrot, established in Shanghai in 2018, explores the diverse possibilities of art and design with a spirit of free flow. It focuses on design practices in historic preservation buildings and various spatial contexts, while also addressing urban renewal and sustainable development.</p>
+      <p>In 2024, it founded an Art, Culture and Design Development Foundation in Hong Kong to support contemporary artists, designers, and curators worldwide. The foundation promotes exhibitions and collection systems around contemporary themes such as spiritual exploration and women's growth, and extends its social impact through cultural public welfare projects.</p>
+      <p>In 2025, it opened its first overseas liaison office in New York, initiating international dialogue and cooperative exchanges in art and design.</p>
+      <div class="about-sub" style="margin-top:36px">
+        <p>The Parrot 鹦鹉空间自2018年创立，深耕艺术与设计领域。早期曾设址于中国上海梧桐区余庆路的一栋独立老洋房内。秉承"灵感唤醒生活"的理念，融合当代艺术、收藏设计与科技等多维手法，在历史保护建筑和商业空间中打造众多创新展览，重新定义了艺术、设计与城市生活的共生关系。</p>
+        <p>The Parrot于外滩卜内门设立线下空间，举办多场青年艺术家主题展。2024年，在香港注册成立鹦鹉艺术文化设计发展基金会，作为非营利机构，致力于支持全球艺术、设计与策展人才，推动综合展览、收藏体系及文化公益项目，拓展艺术的社会影响力。</p>
+        <p>The Parrot鹦鹉空间于2024年推出「灵性的存在」系列展，以植物、光影与当代艺术为媒介，打造沉浸式自然叙事空间。项目旨在让艺术超越视觉，成为感知世界、回应内在精神与生活情绪的方式。</p>
+        <p>Founded in 2018, The Parrot is a leading art and design brand. The Parrot was originally located in a standalone historic villa on Yuqing Road in Shanghai's former French Concession, an area known for its plane tree-lined streets. Guided by "Inspiration Awakens Life," it blends contemporary art, design furniture, installations, botanicals, and technology to create innovative exhibitions in historic and commercial spaces, redefining the synergy between art, design, and city life.</p>
+        <p>The Parrot opened a physical space on the Bund, hosting exhibitions by young artists. In 2024, it founded the Parrot Art, Culture &amp; Design Development Foundation in Hong Kong, a nonprofit supporting global artists, designers, and curators through exhibitions, collections, and public welfare projects to expand art's social impact.</p>
+        <p>In 2024, The Parrot launched the "Spiritual Presence" series, an immersive nature narrative space blending plants, light, and contemporary art. The project invites art to go beyond sight — becoming a way to sense the world, connect with inner spirit, and echo life's emotions.</p>
+      </div>
+    </div>
+    <div class="about-figures">
+      <figure class="about-figure">
+        <img src="assets/about-yuqing.jpg" alt="上海余庆路41弄2号">
+        <figcaption>上海余庆路41弄2号<br>No. 2, Lane 41, Yuqing Road, Shanghai</figcaption>
+      </figure>
+      <figure class="about-figure">
+        <img src="assets/about-bund.jpg" alt="上海外滩卜内门，四川中路133号">
+        <figcaption>上海外滩卜内门，四川中路133号<br>No. 133, Central Sichuan Road, Shanghai</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="founder">
+  <div class="founder-grid">
+    <img src="assets/founder.jpg" alt="Iris Yu 俞征">
+    <div class="founder-body">
+      <p class="eyebrow">Founder</p>
+      <h3>Iris Yu 俞征</h3>
+      <div class="zh-t">创始人 · 基金会执行总监</div>
+      <p>跨领域实践者，在艺术、设计与战略传播之间架设桥梁。拥有二十余年空间艺术策展、设计创新与品牌传播经验，致力于推动当代亚洲艺术的公众参与，回应社会文化议题。</p>
+      <p>A cross-disciplinary practitioner bridging art, design and strategic communication — founder &amp; executive director of The Parrot and its Art &amp; Design Foundation, committed to public engagement with contemporary Asian art.</p>
+      <div class="cred"><b>Education 学业经历</b><br>Master of Applied Communication · RMIT University<br>Master of Innovative Design · Politecnico di Milano</div>
+    </div>
+  </div>
+</section>
+
+<section class="section myth" id="myth">
+  <p class="eyebrow">The Name</p>
+  <div class="sec-head">
+    <h2 class="sec-title">A Bird Between Worlds<span class="zh">鹦鹉 · 东西之间</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="myth-grid">
+    <div class="myth-cell">
+      <div class="tag">Eastern Narrative 东方叙事</div>
+      <h3>The Fire-Extinguishing Bird</h3>
+      <div class="zh-t">救火之鸟</div>
+      <p>In Eastern narratives, the parrot is regarded as a "fire-extinguishing bird." Even with modest strength, it continues — persistently, and in its own way — to respond to the unfolding of the world.</p>
+      <p>东方叙事里，鹦鹉被视作"救火之鸟"。即使力量微小，也仍然持续不断地以自己的方式回应世界的发生。</p>
+      <div class="myth-quote">救火之鸟</div>
+    </div>
+    <div class="myth-cell">
+      <div class="tag">Western Narrative 西方叙事</div>
+      <h3>The Linguistic Bird</h3>
+      <div class="zh-t">语言之鸟</div>
+      <p>In Western culture, it serves as a bridge between worlds — crossing boundaries to connect diverse civilizations, and making mutual understanding possible between different voices.</p>
+      <p>在西方文化中，它更像一只"语言之鸟"，跨越边界，在不同文明与声音之间建立起可以被理解的连接。</p>
+      <div class="myth-quote">语言之鸟</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="journey">
+  <p class="eyebrow">Journey of The Parrot</p>
+  <div class="sec-head">
+    <h2 class="sec-title">Exhibition History<span class="zh">展览历程</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <p class="sec-lede">从余庆路老洋房到外滩历史建筑，再到去中心化的项目制实践 — 每一次迁徙，都是艺术与城市关系的重新定义。<em>From a historic villa to the Bund, and beyond fixed spaces.</em></p>
+  <div style="margin-top:70px"></div>
+
+  <div class="journey">
+    <div class="j-item">
+      <div class="j-year">2018</div>
+      <img class="j-img" src="assets/journey-2018.jpg" alt="余庆路老洋房入口">
+      <div class="j-body">
+        <h3>The Yuqing Road Villa</h3>
+        <div class="zh-t">余庆路 41 弄 · 老洋房</div>
+        <p>The Parrot 创立于上海梧桐区一栋独立老洋房内。秉承"灵感唤醒生活"的理念，融合当代艺术、收藏设计与科技等多维手法，在历史保护建筑和商业空间中打造众多创新展览。</p>
+      </div>
+    </div>
+    <div class="j-item">
+      <div class="j-year">2023</div>
+      <img class="j-img" src="assets/journey-2023.jpg" alt="外滩卜内门洋行入口">
+      <div class="j-body">
+        <h3>The Brunner Mond Building, The Bund</h3>
+        <div class="zh-t">外滩四川中路 · 历史建筑</div>
+        <p>空间迁至外滩历史建筑卜内门洋行二层，展厅近 500 平方米，毗邻 Perrotin、里森画廊与外滩美术馆。一年多时间里吸引超过 59,000 人次观众，与数十位艺术家、策展人及文化机构合作。</p>
+      </div>
+    </div>
+    <div class="j-item">
+      <div class="j-year">2024</div>
+      <img class="j-img" src="assets/hero.jpg" alt="香港基金会">
+      <div class="j-body">
+        <h3>Foundation, Hong Kong</h3>
+        <div class="zh-t">鹦鹉艺术设计基金会成立</div>
+        <p>从实体画廊运营转向非营利艺术基金模式。主动撤出固定展览空间，以去中心化的项目制方式重新定义机构实践 — 在上海先后与苏河皓司、光二仓库、柏悦酒店等不同历史与功能属性的场地合作，使展览成为嵌入城市建筑谱系的文化事件。</p>
+      </div>
+    </div>
+    <div class="j-item">
+      <div class="j-year">2025</div>
+      <img class="j-img landscape" src="assets/ex-realm.jpg" alt="国际拓展">
+      <div class="j-body">
+        <h3>International Dialogue</h3>
+        <div class="zh-t">纽约联络处 · 国际对话</div>
+        <p>在纽约设立首个海外联络处，开启国际艺术设计对话与交流合作。「灵性的存在」女性主题双年展持续推动跨媒介、跨语境的创新实践，从上海走向世界。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section exhibitions" id="exhibitions">
+  <p class="eyebrow">The Existence of Spirituality</p>
+  <div class="sec-head">
+    <h2 class="sec-title">Exhibitions<span class="zh">展览</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="ex-intro">
+    <div class="ex-intro-img">
+      <img src="assets/ex-springrenewal.jpg" alt="灵性的存在展览现场">
+    </div>
+    <div>
+      <p><em>「灵性的存在」</em>是 The Parrot 自 2024 年推出的女性主题展览系列，以植物、光影与当代艺术为媒介，构建沉浸式的自然叙事空间。</p>
+      <p>它不仅是空间美学实验，也体现 The Parrot 持续推动艺术公共化、自然教育与社会情感连接的研究方向 — 以温和而开放的方式，将当代艺术转化为公众可进入、可体验、可共鸣的文化现场。</p>
+      <p><em>The Existence of Spirituality</em> is The Parrot's women-themed biennial series — an immersive natural narrative woven from plants, light and shadow, and contemporary art.</p>
+    </div>
+  </div>
+
+  <div class="ex-series-title">The Existence of Spirituality</div>
+  <div class="ex-series-sub">灵性的存在 · 女性主题双年展系列</div>
+
+  <div class="ex-filters">
+    <button class="pill active" data-filter="all">All 全部</button>
+    <button class="pill" data-filter="series">灵性的存在 Series</button>
+    <button class="pill" data-filter="bund">Bund Era 外滩时期</button>
+    <button class="pill" data-filter="solo">Solo &amp; Special 个展及特别项目</button>
+  </div>
+
+  <div class="ex-grid" id="exGrid">
+    <article class="ex-card" data-cat="series" data-ex="15">
+      <div class="ex-thumb"><span class="ex-year">2026</span><img src="assets/ex-between-cover.webp" alt="万物花园·之间展览现场"></div>
+      <div class="ex-info"><h3>Garden of All Things: Between</h3><div class="zh-t">万物花园 · 之间</div>
+      <div class="ex-meta"><span class="venue">上海 · 比利时之家</span><span>灵性的存在系列</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="series" data-ex="1">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/ex-springrenewal.jpg" alt="春唤"></div>
+      <div class="ex-info"><h3>Spiritual Presence: Spring Renewal</h3><div class="zh-t">灵性的存在 · 春焕</div>
+      <div class="ex-meta"><span class="venue">上海 · Suhe Haus</span><span>群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="series" data-ex="2">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/ex-lighttraces.jpg" alt="越过痕迹的光"></div>
+      <div class="ex-info"><h3>Light Across Traces</h3><div class="zh-t">灵性的存在 · 越过痕迹的光</div>
+      <div class="ex-meta"><span class="venue">上海</span><span>群展 · 女性艺术家</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="series" data-ex="3">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/ex-garden1.jpg" alt="万物花园 I"></div>
+      <div class="ex-info"><h3>Garden of All Things I</h3><div class="zh-t">灵性的存在 · 万物花园</div>
+      <div class="ex-meta"><span class="venue">上海</span><span>群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="series" data-ex="4">
+      <div class="ex-thumb"><span class="ex-year">2025</span><img src="assets/ex-realm.jpg" alt="光落之境"></div>
+      <div class="ex-info"><h3>Where Light Falls</h3><div class="zh-t">灵性的存在 · 光落之境</div>
+      <div class="ex-meta"><span class="venue">上海</span><span>双年展 2025 首展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="series" data-ex="5">
+      <div class="ex-thumb"><span class="ex-year">2025</span><img src="assets/ex-garden2.jpg" alt="万物花园 II"></div>
+      <div class="ex-info"><h3>Garden of All Things II</h3><div class="zh-t">灵性的存在 · 万物花园 II</div>
+      <div class="ex-meta"><span class="venue">上海 · 光二仓库</span><span>群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="series" data-ex="6">
+      <div class="ex-thumb"><span class="ex-year">2025</span><img src="assets/ex-garden3.jpg" alt="万物花园 III"></div>
+      <div class="ex-info"><h3>Garden of All Things III</h3><div class="zh-t">灵性的存在 · 万物花园 III</div>
+      <div class="ex-meta"><span class="venue">上海</span><span>群展 · 系列 culmination</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="bund" data-ex="7">
+      <div class="ex-thumb"><span class="ex-year">2023</span><img src="assets/ex-springcall.jpg" alt="春唤"></div>
+      <div class="ex-info"><h3>Spring Call</h3><div class="zh-t">春唤 · 开幕展</div>
+      <div class="ex-meta"><span class="venue">上海 · 外滩空间</span><span>群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="bund" data-ex="8">
+      <div class="ex-thumb"><span class="ex-year">2023</span><img src="assets/ex-dreams.jpg" alt="艺游梦境"></div>
+      <div class="ex-info"><h3>Art Roaming Dreams</h3><div class="zh-t">艺游梦境</div>
+      <div class="ex-meta"><span class="venue">上海 · 外滩空间</span><span>群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="bund" data-ex="9">
+      <div class="ex-thumb"><span class="ex-year">2023</span><img src="assets/ex-labyrinth.jpg" alt="迷楼陨石"></div>
+      <div class="ex-info"><h3>Labyrinth · Meteorite</h3><div class="zh-t">迷楼 · 陨石</div>
+      <div class="ex-meta"><span class="venue">上海 · 外滩空间</span><span>叶帆个展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="bund" data-ex="10">
+      <div class="ex-thumb"><span class="ex-year">2023</span><img src="assets/ex-metaphors.jpg" alt="生活的隐喻"></div>
+      <div class="ex-info"><h3>Metaphors of Life</h3><div class="zh-t">生活的隐喻</div>
+      <div class="ex-meta"><span class="venue">上海 · 外滩空间</span><span>年末群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="solo" data-ex="11">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/ex-summer.jpg" alt="你永远是自由的夏天"></div>
+      <div class="ex-info"><h3>You Are Forever the Summer of Freedom</h3><div class="zh-t">你永远是自由的夏天</div>
+      <div class="ex-meta"><span class="venue">上海</span><span>群展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="solo" data-ex="12">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/ex-ziyu.jpg" alt="似水流年"></div>
+      <div class="ex-info"><h3>As Water Flows, So Do Years</h3><div class="zh-t">似水流年 · 李子玉上海首展</div>
+      <div class="ex-meta"><span class="venue">上海 · 卜内门洋行</span><span>个展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="solo" data-ex="13">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/ex-lightwind.jpg" alt="光与风之间"></div>
+      <div class="ex-info"><h3>Between Light and Wind</h3><div class="zh-t">光与风之间 · 邓思齐</div>
+      <div class="ex-meta"><span class="venue">上海</span><span>个展</span></div></div>
+    </article>
+    <article class="ex-card" data-cat="solo" data-ex="14">
+      <div class="ex-thumb"><span class="ex-year">2024</span><img src="assets/col-2.jpg" alt="鹦鹉的独白"></div>
+      <div class="ex-info"><h3>Solo of The Parrot</h3><div class="zh-t">鹦鹉的独白 · 限定馆藏展</div>
+      <div class="ex-meta"><span class="venue">限定馆藏展</span><span>馆藏艺术家群展</span></div></div>
+    </article>
+  </div>
+</section>
+
+<div class="ex-overlay" id="exOverlay">
+  <div class="ex-modal">
+    <button class="ex-close" onclick="closeEx()">Close ✕</button>
+    <div class="ex-modal-img"><img id="exModalImg" src="" alt=""></div>
+    <div class="ex-modal-body">
+      <h3 id="exModalTitle"></h3>
+      <div class="zh-t" id="exModalZh"></div>
+      <div class="meta-line" id="exModalMeta"></div>
+      <p id="exModalDesc"></p>
+      <div class="artists"><b>Artists 艺术家</b><span id="exModalArtists"></span></div>
+    </div>
+    <div class="ex-modal-gallery" id="exModalGallery" aria-label="Exhibition views 展览现场"></div>
+  </div>
+</div>
+
+<style>
+/* ---------- her room feature ---------- */
+.herroom{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;margin:56px 0 80px;align-items:center;background:var(--paper);border:1px solid var(--line);padding:36px}
+.herroom-imgs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:14px}
+.herroom-imgs img{width:100%;object-fit:cover;height:100%}
+.herroom-imgs img:first-child{grid-row:span 2;aspect-ratio:auto;max-height:560px}
+.herroom-imgs img:nth-child(2),.herroom-imgs img:nth-child(3){aspect-ratio:4/3}
+.herroom-body h3{font-size:clamp(24px,2.6vw,32px);font-weight:500;letter-spacing:.04em;line-height:1.3;margin-top:10px}
+.herroom-body .zh-t{font-size:13px;color:var(--muted);letter-spacing:.2em;margin:4px 0 20px}
+.herroom-body p{color:var(--ink-soft);font-size:15.5px}
+.herroom-body .herroom-en{font-style:italic;font-size:14px;color:var(--muted);margin-top:12px}
+@media(max-width:860px){.herroom{grid-template-columns:1fr;padding:20px}}
+
+/* ---------- charity ---------- */
+.charity{background:var(--paper-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:44px 34px;margin-top:56px}
+.ch-card{display:grid;grid-template-columns:.85fr 1.15fr;gap:24px;align-items:start}
+.ch-card img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.ch-card h3{font-size:20px;font-weight:500;letter-spacing:.04em;line-height:1.4}
+.ch-card .zh-t{font-size:13px;color:var(--muted);letter-spacing:.25em;margin:2px 0 14px}
+.ch-card p{font-size:14.5px;color:var(--ink-soft)}
+.ch-card .ch-year{font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--mauve-deep);text-transform:uppercase;margin-bottom:6px}
+@media(max-width:860px){.ch-grid{grid-template-columns:1fr}}
+
+/* ---------- urban renewal ---------- */
+.ur-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:34px;margin-top:56px}
+.ur-item{position:relative;overflow:hidden}
+.ur-item img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3;transition:transform .8s ease}
+.ur-item.tall img{aspect-ratio:3/4}
+.ur-item:hover img{transform:scale(1.04)}
+.ur-cap{position:absolute;left:0;right:0;bottom:0;padding:44px 22px 16px;background:linear-gradient(transparent,rgba(33,30,25,.72));color:#F1EEE5}
+.ur-cap h3{font-size:17px;font-weight:500;letter-spacing:.06em}
+.ur-cap span{font-family:var(--sans);font-size:11px;letter-spacing:.14em;opacity:.85;display:block;margin-top:2px}
+
+/* ---------- collection ---------- */
+.collection{background:var(--paper-2);border-top:1px solid var(--line)}
+.col-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px;margin-top:56px}
+.col-item img{width:100%;aspect-ratio:3/3.7;object-fit:cover}
+.col-item .cap{margin-top:12px;font-family:var(--sans);font-size:11.5px;line-height:1.8;color:var(--muted);letter-spacing:.04em}
+.col-item .cap b{color:var(--ink-soft);font-weight:500}
+@media(max-width:900px){.col-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.col-grid{grid-template-columns:1fr}}
+
+/* ---------- artists wall ---------- */
+.artists-wall{margin-top:80px;padding-top:50px;border-top:1px solid var(--line)}
+.artists-wall h3{font-size:26px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.artists-wall .zh-t{font-size:14px;color:var(--muted);letter-spacing:.35em;margin-bottom:30px}
+.artist-names{columns:4;column-gap:40px;font-family:var(--sans);font-size:13px;letter-spacing:.1em;color:var(--ink-soft);line-height:2.4}
+@media(max-width:1000px){.artist-names{columns:3}}
+@media(max-width:640px){.artist-names{columns:2}}
+
+/* ---------- founder ---------- */
+.founder-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:64px;margin-top:56px;align-items:start}
+.founder-grid img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.founder-body h3{font-size:clamp(30px,3.4vw,42px);font-weight:500;letter-spacing:.1em}
+.founder-body .zh-t{font-size:14px;color:var(--muted);letter-spacing:.4em;margin:6px 0 28px}
+.founder-body p{color:var(--ink-soft);font-size:16px;margin-bottom:16px}
+.founder-body .cred{margin-top:26px;padding-top:22px;border-top:1px solid var(--line);font-family:var(--sans);font-size:13px;letter-spacing:.08em;color:var(--muted);line-height:2.1}
+.founder-body .cred b{display:block;font-weight:500;letter-spacing:.25em;text-transform:uppercase;font-size:10.5px;color:var(--mauve-deep);margin-bottom:6px}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:#CBC4B4;padding:80px 6vw 36px}
+.f-top{display:flex;justify-content:space-between;align-items:flex-start;gap:60px;flex-wrap:wrap;padding-bottom:56px;border-bottom:1px solid rgba(234,230,219,.14)}
+.f-brand .logo{font-family:var(--serif);font-weight:600;font-size:30px;letter-spacing:.3em;text-transform:uppercase;color:#EAE6DB}
+.f-brand .zh{font-size:13px;letter-spacing:.5em;margin-top:10px;color:var(--muted)}
+.f-brand .script{font-family:var(--script);font-size:36px;color:var(--mauve);margin-top:24px}
+.f-cols{display:flex;gap:70px;flex-wrap:wrap}
+.f-col h4{font-family:var(--sans);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:#9C9484;margin-bottom:16px;font-weight:400}
+.f-col a,.f-col span{display:block;font-size:14.5px;color:#CBC4B4;margin-bottom:9px;letter-spacing:.05em}
+.f-col a:hover{color:#EAE6DB}
+.f-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:26px;font-family:var(--sans);font-size:11px;letter-spacing:.16em;color:#8B8172}
+
+/* ---------- mobile optimisation (no effect on desktop) ---------- */
+@media(max-width:900px){
+  .hero{height:100svh;min-height:560px}
+  .hero-kicker{letter-spacing:.34em;margin-bottom:20px}
+  .hero-script{margin-top:24px}
+  .section{padding:70px 5.5vw}
+  .sec-title{letter-spacing:.1em}
+  .sec-title .zh{letter-spacing:.35em}
+  .about-grid{grid-template-columns:1fr;gap:48px;margin-top:40px}
+  .about-figure::before{width:64px;height:64px;top:-10px;right:-8px}
+  .myth-grid{grid-template-columns:1fr;margin-top:36px}
+  .myth-cell{padding:36px 4px}
+  .myth-cell:first-child{border-right:none;border-bottom:1px solid var(--line)}
+  .ex-intro{grid-template-columns:1fr;gap:30px;margin-top:36px}
+  .ex-series-title{margin-top:60px}
+  .founder-grid{grid-template-columns:1fr;gap:36px;margin-top:36px}
+  .founder-grid img{aspect-ratio:4/5;max-height:70vh;object-position:top}
+  .ur-grid{grid-template-columns:1fr;margin-top:36px}
+  .ch-card{grid-template-columns:1fr}
+  .j-item{margin-bottom:70px}
+  .j-body h3{font-size:24px}
+  .f-cols{gap:44px}
+  .f-brand .logo{font-size:25px}
+  .f-brand .script{font-size:30px}
+  .pill{padding:9px 15px;font-size:11px}
+}
+@media(max-width:520px){
+  body{font-size:16px}
+  .hero{min-height:520px}
+  .hero-title{letter-spacing:.08em}
+  .hero-sub{letter-spacing:.04em}
+  .hero-scroll{bottom:24px}
+  .section{padding:56px 6vw}
+  .ex-thumb img{aspect-ratio:3/3.4}
+  .ex-modal-body h3{font-size:24px}
+  .ex-overlay{padding:0}
+  .ex-modal{max-height:100vh;height:100vh}
+  .ex-modal-img{max-height:32vh;min-height:200px}
+  .myth-quote{font-size:28px}
+  .sec-lede{font-size:15px}
+}
+@media(hover:none){
+  .ex-card:hover{transform:none}
+  .ex-card:hover .ex-thumb img{transform:none;filter:none}
+  .ur-item:hover img{transform:none}
+}
+
+/* ---------- gallery-style mobile layer (Morgan Lehman feel) ---------- */
+/* Everything below is scoped to max-width:900px — zero effect on desktop */
+@keyframes pbHeroImage{from{opacity:0;transform:scale(1.018)}to{opacity:1;transform:scale(1)}}
+@keyframes pbHeroCopy{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pbHeaderIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.pb-lb{display:none}
+@media(max-width:900px){
+  /* centered, wide-tracked section headers */
+  .sec-head{justify-content:center;gap:14px}
+  .sec-rule{display:none}
+  .eyebrow{text-align:center}
+  .sec-title{text-align:center;letter-spacing:.22em}
+  .sec-lede{margin-left:auto;margin-right:auto;text-align:center;max-width:34em}
+
+  /* full-bleed installation-view imagery */
+  .j-item{margin-bottom:84px}
+  .j-img,.j-img.landscape{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);aspect-ratio:4/3}
+  .j-body,.j-item:nth-child(odd) .j-body{padding:26px 6vw 0 6vw}
+  .j-item:nth-child(even) .j-body{padding:26px 6vw 0 6vw}
+  .journey::before{left:6vw}
+  .j-year{left:6vw;transform:translateX(0)}
+
+  .ex-grid{grid-template-columns:1fr;gap:0;margin-top:36px}
+  .ex-card{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-bottom:42px}
+  .ex-thumb img{aspect-ratio:4/3}
+  .ex-info{padding:16px 6vw 10px;border-bottom:1px solid var(--line)}
+  .ex-filters{justify-content:flex-start}
+
+  .ur-grid{grid-template-columns:1fr;gap:40px 0;margin-top:40px}
+  .ur-item{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw)}
+
+  .about-figure img{aspect-ratio:4/3}
+
+  /* quiet image fades */
+  .section img{transition:opacity .4s ease-in-out}
+
+  /* cover lock: on phones the site opens as a locked cover; the only way in is the ☰ menu */
+  body.cover-mode{overflow:hidden;height:100svh}
+  .hero-scroll{display:none}
+
+  /* lightbox viewer: paper backdrop, image-centered, edge tap zones */
+  .pb-lb{display:flex;position:fixed;inset:0;z-index:300;background:rgba(234,230,219,.98);
+    opacity:0;pointer-events:none;transition:opacity .4s ease-in-out;
+    flex-direction:column;align-items:center;justify-content:center}
+  .pb-lb.open{opacity:1;pointer-events:auto}
+  .pb-lb img{max-width:92vw;max-height:76vh;width:auto;height:auto;object-fit:contain;
+    opacity:0;transition:opacity .4s ease-in-out .08s}
+  .pb-lb img.show{opacity:1}
+  .pb-lb .lb-cap{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin-top:18px;text-align:center;padding:0 10vw;min-height:16px;line-height:1.8}
+  .pb-lb .lb-count{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+    font-family:var(--sans);font-size:10px;letter-spacing:.3em;color:var(--muted)}
+  .pb-lb .lb-close{position:fixed;top:18px;right:18px;font-family:var(--sans);font-size:12px;
+    letter-spacing:.1em;background:var(--ink);color:var(--paper);border:none;padding:9px 16px;cursor:pointer;z-index:2}
+  .pb-lb .lb-prev,.pb-lb .lb-next{position:fixed;top:0;bottom:64px;width:30%;display:flex;
+    align-items:center;justify-content:center;font-family:var(--serif);font-size:36px;
+    color:var(--ink-soft);cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+  .pb-lb .lb-prev{left:0}
+  .pb-lb .lb-next{right:0}
+
+  /* Morgan Lehman-inspired mobile editorial system */
+  html{scroll-padding-top:68px}
+  body{line-height:1.65}
+  .section{scroll-margin-top:68px;padding:76px 24px}
+
+  /* persistent, quiet gallery header */
+  .nav,.nav.scrolled{height:68px;padding:0 18px;background:rgba(241,238,229,.97);
+    border-bottom:1px solid var(--line);backdrop-filter:blur(12px);animation:pbHeaderIn .8s ease-in-out both}
+  .nav-logo{font-family:var(--sans);font-size:16px;font-weight:500;letter-spacing:.28em}
+  .nav-burger{width:44px;height:44px;display:flex;flex-direction:column;justify-content:center;align-items:center;margin-right:-10px}
+  .nav-burger span{width:23px;margin:3px 0}
+  body.nav-open .nav-burger span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+  body.nav-open .nav-burger span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+  .nav-mobile{top:68px;width:100%;max-width:none;padding:28px 24px 44px;justify-content:flex-start;gap:0;
+    background:var(--paper-2);border:0;box-shadow:none;overflow-y:auto;
+    transition:transform .6s cubic-bezier(.65,.06,.19,.96)}
+  .nav-mobile a{min-height:56px;padding:16px 2px;font-size:13px;letter-spacing:.2em;opacity:0;transform:translateY(8px);
+    transition:opacity .4s ease-in-out,transform .8s cubic-bezier(.45,0,.27,1)}
+  .nav-mobile.open a{opacity:1;transform:none}
+  .nav-mobile.open a:nth-child(2){transition-delay:.04s}
+  .nav-mobile.open a:nth-child(3){transition-delay:.08s}
+  .nav-mobile.open a:nth-child(4){transition-delay:.12s}
+  .nav-mobile.open a:nth-child(5){transition-delay:.16s}
+  .nav-mobile.open a:nth-child(6){transition-delay:.2s}
+  .nav-mobile.open a:nth-child(7){transition-delay:.24s}
+  .nav-mobile a .zh{margin-top:4px}
+
+  /* the cover becomes the first screen, not a scroll-locked gate */
+  .hero{width:calc(100% - 24px);height:calc(100svh - 88px);min-height:570px;margin:68px 12px 20px}
+  .hero img{filter:saturate(.78) brightness(.84)}
+  .hero-slides{animation:pbHeroImage 1.1s cubic-bezier(.45,0,.27,1) .08s both}
+  .hero::after{background:linear-gradient(180deg,rgba(33,30,25,.08),rgba(33,30,25,.46))}
+  .hero-inner{width:100%;padding:0 20px;animation:pbHeroCopy .9s cubic-bezier(.45,0,.27,1) .22s both}
+  .hero-kicker{font-size:8px;line-height:1.7;letter-spacing:.27em;margin-bottom:18px}
+  .hero-brand{font-size:12px;letter-spacing:.38em;margin-right:-.38em}
+  .hero-title{font-size:clamp(45px,13.5vw,62px);line-height:.98;letter-spacing:.015em}
+  .hero-sub{font-size:15px;line-height:1.5;letter-spacing:.15em;margin-top:18px}
+  .hero-script{font-size:31px;margin-top:20px}
+  .hero-arrow{width:42px;height:62px;font-size:34px}
+  .hero-prev{left:0}.hero-next{right:0}
+  .hero-dots{bottom:15px;gap:8px}
+  .hero-dot{width:22px}
+
+  /* left-aligned, typographic section introductions */
+  .sec-head{justify-content:flex-start;margin-bottom:20px}
+  .eyebrow{font-family:var(--sans);font-size:10px;line-height:1.5;letter-spacing:.22em;text-transform:uppercase;text-align:left}
+  .sec-title{text-align:left;font-family:var(--sans);font-size:clamp(25px,8vw,34px);font-weight:400;line-height:1.25;letter-spacing:.15em}
+  .sec-title .zh{font-family:var(--serif);font-size:.48em;line-height:1.5;letter-spacing:.3em;margin-top:8px}
+  .sec-lede{max-width:none;margin:18px 0 0;text-align:left;font-size:15px}
+
+  /* installation imagery sits close to the phone edge with captions below */
+  .about-grid,.founder-grid,.ex-intro{margin-top:34px}
+  .about-figure::before{display:none}
+  .about-figure img,.founder-grid>img,.ex-intro-img img,
+  .j-img,.j-img.landscape,.ch-card>img,.col-item>img{
+    width:calc(100vw - 24px);max-width:none;margin-left:calc(50% - 50vw + 12px)}
+  .about-figure figcaption,.col-item .cap{font-family:var(--sans);font-size:10px;line-height:1.75;
+    letter-spacing:.15em;text-transform:uppercase;text-align:left;margin-top:14px;color:var(--muted)}
+
+  /* timeline becomes a linear exhibition list */
+  .journey::before{display:none}
+  .j-item{display:flex;flex-direction:column;margin-bottom:78px}
+  .j-img,.j-img.landscape{order:1;aspect-ratio:4/3}
+  .j-year{position:static;order:2;align-self:flex-start;transform:none;margin:18px 0 0;padding:0;
+    border-radius:0;background:transparent;color:var(--mauve-deep);font-size:10px;letter-spacing:.25em}
+  .j-body,.j-item:nth-child(odd) .j-body,.j-item:nth-child(even) .j-body{order:3;padding:7px 0 0;text-align:left;align-items:flex-start}
+  .j-body h3{font-family:var(--sans);font-size:13px;line-height:1.55;font-weight:400;letter-spacing:.16em;text-transform:uppercase}
+  .j-body .zh-t{font-size:12px;letter-spacing:.18em;margin:4px 0 13px}
+  .j-body p{font-size:15px;line-height:1.75}
+
+  /* compact, swipeable category navigation */
+  .ex-series-title{margin:62px 0 8px;font-size:38px}
+  .ex-series-sub{font-size:10px;line-height:1.6;letter-spacing:.26em;margin-bottom:28px}
+  .ex-filters{flex-wrap:nowrap;gap:24px;margin:0 -24px 40px;padding:0 24px;overflow-x:auto;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .ex-filters::-webkit-scrollbar{display:none}
+  .pill{flex:0 0 auto;min-height:44px;padding:11px 0 9px;border:0;border-bottom:1px solid transparent;
+    border-radius:0;background:transparent;color:var(--muted);font-size:10px;letter-spacing:.18em;white-space:nowrap}
+  .pill.active{background:transparent;color:var(--ink);border-color:var(--ink)}
+
+  /* one exhibition per row, with restrained museum-label captions */
+  .ex-grid{margin-top:0}
+  .ex-card{width:calc(100vw - 24px);margin-left:calc(50% - 50vw + 12px);margin-bottom:64px}
+  .ex-thumb img{aspect-ratio:4/3}
+  .ex-year{top:10px;right:10px;padding:3px 9px;font-size:9px;letter-spacing:.16em}
+  .ex-info{padding:15px 2px 0;border:0;font-family:var(--sans);text-transform:uppercase}
+  .ex-info h3{font-family:var(--sans);font-size:11px;line-height:1.65;font-weight:400;letter-spacing:.16em}
+  .ex-info .zh-t{font-size:10px;line-height:1.7;letter-spacing:.18em;margin-top:4px}
+  .ex-meta{gap:8px 14px;margin-top:7px;font-size:9.5px;line-height:1.6;letter-spacing:.12em}
+  .ex-thumb img{transition:opacity .4s ease-in-out,transform .8s cubic-bezier(.45,0,.27,1)}
+  .ex-card:active .ex-thumb img{opacity:.82;transform:scale(.995)}
+  .ex-modal{opacity:0;transform:translateY(16px);transition:opacity .4s ease-in-out,transform .8s cubic-bezier(.45,0,.27,1)}
+  .ex-overlay.open .ex-modal{opacity:1;transform:none}
+
+  /* feature and project cards lose their desktop boxes/overlays */
+  .herroom{margin:42px -12px 72px;padding:0;border:0;background:transparent;gap:28px}
+  .herroom-imgs{gap:8px}
+  .herroom-body{padding:0 12px}
+  .ch-grid{grid-template-columns:1fr;gap:64px;margin-top:42px}
+  .ch-card{gap:17px}
+  .ch-card h3{font-family:var(--sans);font-size:12px;line-height:1.6;font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+  .ch-card .zh-t{font-size:11px;letter-spacing:.16em;margin:4px 0 12px}
+  .ch-card p{font-size:15px;line-height:1.75}
+  .ur-grid{gap:64px;margin-top:42px}
+  .ur-item{width:calc(100vw - 24px);margin-left:calc(50% - 50vw + 12px);overflow:visible}
+  .ur-item img,.ur-item.tall img{height:auto;aspect-ratio:4/3;object-fit:cover}
+  .ur-item.tall img{aspect-ratio:3/4}
+  .ur-cap{position:static;padding:14px 2px 0;background:none;color:var(--ink)}
+  .ur-cap h3{font-family:var(--sans);font-size:11px;line-height:1.65;font-weight:400;letter-spacing:.15em;text-transform:uppercase}
+  .ur-cap span{font-size:10px;line-height:1.7;letter-spacing:.13em;color:var(--muted)}
+  .col-grid{grid-template-columns:1fr;gap:62px;margin-top:42px}
+  .artists-wall{margin-top:74px;padding-top:40px}
+  .artists-wall h3{font-family:var(--sans);font-size:17px;line-height:1.5;letter-spacing:.15em}
+  .artist-names{columns:1;font-size:11px;line-height:2.25;letter-spacing:.1em}
+
+  footer{padding:64px 24px 30px}
+  .f-top,.f-cols{display:block}
+  .f-col{margin-top:36px}
+  .f-bottom{display:block;line-height:1.9}
+  .f-bottom span{display:block;margin-top:8px}
+
+  .pb-lb .lb-cap,.pb-lb .lb-count{opacity:0;transform:translateY(6px);
+    transition:opacity .4s ease-in-out .14s,transform .8s cubic-bezier(.45,0,.27,1) .14s}
+  .pb-lb.open .lb-cap,.pb-lb.open .lb-count{opacity:1;transform:none}
+}
+
+@media(max-width:900px) and (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  body,.nav,.hero img,.hero-inner,.section img,.nav-mobile,.nav-mobile a,.ex-modal,.pb-lb *{animation:none;transition:none}
+}
+</style>
+
+<section class="section charity" id="charity">
+  <p class="eyebrow">Philanthropy &amp; Partnerships</p>
+  <div class="sec-head">
+    <h2 class="sec-title">Charitable Projects<span class="zh">公益项目及合作活动</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <p class="sec-lede">以艺术家的思想谱系与展览叙事为锚点，将艺术机构的资源转化为公共文化资本，主动搭建艺术与多元社会群体之间的认知桥梁。</p>
+
+  <div class="herroom">
+    <div class="herroom-imgs">
+      <img src="assets/herroom-1.jpg" alt="她的房间 女性力量艺术论坛">
+      <img src="assets/herroom-2.jpg" alt="她的房间 现场">
+      <img src="assets/herroom-3.jpg" alt="她的房间 论坛嘉宾">
+    </div>
+    <div class="herroom-body">
+      <div class="ch-year">2025 · Shanghai</div>
+      <h3>Her Room · 女性力量艺术论坛</h3>
+      <div class="zh-t">她的房间 · 颂艺术中心 · ART021 上海当代艺术博览会</div>
+      <p>2025 年，ART NEWS 报道的颂艺术中心主办项目「她的房间」于 ART021 上海当代艺术博览会呈现。The Parrot 出席并参与其女性力量艺术论坛，与女性创作者们同场对话 — 支持女性创作者，是 The Parrot 持续不变的 commitment。</p>
+      <p class="herroom-en">In 2025, "Her Room", presented by Soul Art Center and reported by ART NEWS, took place at ART021 Shanghai Contemporary Art Fair. The Parrot attended and joined its Women's Power Art Forum — standing with, and supporting, women creators.</p>
+    </div>
+  </div>
+
+  <div class="ch-grid">
+    <div class="ch-card">
+      <img src="assets/charity-children.jpg" alt="鹦鹉与未来科技儿童绘画展">
+      <div>
+        <div class="ch-year">2026 · Suzhou</div>
+        <h3>Parrot &amp; Future Technology</h3>
+        <div class="zh-t">鹦鹉与未来科技 · 公益儿童绘画展</div>
+        <p>于苏州诚品书店启幕，作为叶帆个展《迷楼：镜中亻》的公益板块，汇聚血液病儿童与艺术工作坊参与者的创作，描绘他们对未来世界的理解与想象。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/charity-tedx.jpg" alt="TEDx YCYW">
+      <div>
+        <div class="ch-year">2026 · Shanghai</div>
+        <h3>TEDx YCYW Shanghai Youth</h3>
+        <div class="zh-t">未来种子 · 首席合作伙伴</div>
+        <p>以「Seeds for Tomorrow」为主题，于上海宛平剧场见证青年思想的破土与绽放。创始人俞征 Iris Yu 受邀出席 Speaker Dinner 并作为开场嘉宾致辞：艺术、设计与科学 — 你们是未来的种子。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/charity-swatch.jpg" alt="斯沃琪和平饭店艺术中心驻地">
+      <div>
+        <div class="ch-year">2025 · Shanghai</div>
+        <h3>Tears of the Labyrinth</h3>
+        <div class="zh-t">迷楼之泪 · 光芒 · 斯沃琪驻地</div>
+        <p>The Parrot 委任艺术家叶帆，在其斯沃琪和平饭店艺术中心驻地期间共同创作 — 回收疫情期间的葡萄酒瓶，以有色亚克力浇铸封存，封存的不仅是物本身，更是物背后情感的瞬间。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/ch-westbund.jpg" alt="西岸艺博会期间藏家酒会">
+      <div>
+        <div class="ch-year">2025 · Shanghai</div>
+        <h3>Collectors' Reception</h3>
+        <div class="zh-t">西岸艺博会期间藏家酒会</div>
+        <p>西岸艺术与设计博览会期间的藏家酒会，与藏家、艺术家及艺术界友人相聚，延续 The Parrot 的收藏与对话网络。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/charity-ziyu.jpg" alt="李子玉水墨艺术展">
+      <div>
+        <div class="ch-year">2024 — 2026 · Shanghai / Ningbo</div>
+        <h3>The Poetics of Dwelling</h3>
+        <div class="zh-t">水墨无声 · 爱涤心尘 · 李子玉</div>
+        <p>从 2024 年卜内门洋行「似水流年」上海首展，到 2026 年 DG ART SPACE 水墨艺术展与东钱湖畔的文化名家对谈 — 李欧梵、陈冠中、麦家、毛尖等两岸三地名家相聚宁波柏悦。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/ch-sound.jpg" alt="自然音声疗愈音乐会">
+      <div>
+        <div class="ch-year">2024</div>
+        <h3>Natural Sound Healing Concert</h3>
+        <div class="zh-t">自然音声疗愈音乐会</div>
+        <p>烛光与颂钵之夜 — 在城市夜景环绕的 loft 空间中，以自然音声引导参与者进入深度放松与内在觉察。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/ch-talk.jpg" alt="艺术对谈">
+      <div>
+        <div class="ch-year">2024</div>
+        <h3>Artist Talk</h3>
+        <div class="zh-t">艺术对谈 · iris、倪志琪、徐薇</div>
+        <p>创始人 Iris 与艺术家倪志琪、艺术评论人徐薇展开对谈，围绕创作、收藏与当代艺术生态展开讨论。</p>
+      </div>
+    </div>
+    <div class="ch-card">
+      <img src="assets/ch-dinner.jpg" alt="鹦鹉艺术晚宴">
+      <div>
+        <div class="ch-year">2023</div>
+        <h3>The Parrot Art Dinner</h3>
+        <div class="zh-t">鹦鹉艺术晚宴</div>
+        <p>连接美术馆、拍卖行、品牌、明星及公众群体的艺术晚宴 — 形成兼具艺术展示、社交传播与文化协作功能的复合型平台。</p>
+      </div>
+    </div>
+  </div>
+  <div class="myth-quote" style="margin-top:64px;text-align:center">Let life be inspiring</div>
+</section>
+
+<section class="section" id="urban">
+  <p class="eyebrow">Urban Renewal</p>
+  <div class="sec-head">
+    <h2 class="sec-title">Urban Renewal<span class="zh">城市更新</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <p class="sec-lede">"保护不是静止保存，而是当代激活。" 在尊重原有建筑肌理、历史气质与生活痕迹的基础上，加入当代艺术、设计语言与公共体验，让老建筑重新进入今天的城市生活。</p>
+  <div class="ur-grid">
+    <div class="ur-item tall">
+      <img src="assets/urban-3.jpg" alt="虹桥艺术中心">
+      <div class="ur-cap"><h3>Hongqiao Art Centre</h3><span>上海虹桥艺术中心项目更新 · 与 BAU 设计事务所合作</span></div>
+    </div>
+    <div class="ur-item">
+      <img src="assets/urban-1.jpg" alt="仁恒河滨花园">
+      <div class="ur-cap"><h3>Yanlord Riverside Garden</h3><span>上海仁恒河滨花园设计</span></div>
+    </div>
+    <div class="ur-item">
+      <img src="assets/urban-2.jpg" alt="风貌建筑">
+      <div class="ur-cap"><h3>Heritage Buildings</h3><span>上海风貌建筑整体规划设计</span></div>
+    </div>
+    <div class="ur-item tall">
+      <img src="assets/urban-4.jpg" alt="西岸会议中心">
+      <div class="ur-cap"><h3>West Bund Conference Center</h3><span>上海西岸会议中心</span></div>
+    </div>
+    <div class="ur-item">
+      <img src="assets/ur-alucobond.jpg" alt="ALUCOBOND中国区总部展厅">
+      <div class="ur-cap"><h3>ALUCOBOND China Headquarters Showroom</h3><span>ALUCOBOND 中国区总部展厅</span></div>
+    </div>
+    <div class="ur-item">
+      <img src="assets/ur-wuqiong.jpg" alt="无穹投资公司">
+      <div class="ur-cap"><h3>Wuqiong Investment Company</h3><span>无穹投资公司</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section collection" id="collection">
+  <p class="eyebrow">The Parrot Collection</p>
+  <div class="sec-head">
+    <h2 class="sec-title">Collection<span class="zh">鹦鹉馆藏</span></h2>
+    <div class="sec-rule"></div>
+  </div>
+  <div class="col-grid">
+    <div class="col-item">
+      <img src="assets/col-1.jpg" alt="Search the Blue">
+      <div class="cap"><b>Marie de Villepin</b><br>Search the Blue<br>布面油画 Oil on canvas · 204×108cm · 2025</div>
+    </div>
+    <div class="col-item">
+      <img src="assets/col-2.jpg" alt="馆藏作品">
+      <div class="cap"><b>Wu Didi 吴笛笛</b><br>静物 · 竹 No.8<br>布面油画 Oil on canvas · 200×150cm · 2014</div>
+    </div>
+    <div class="col-item">
+      <img src="assets/col-3.jpg" alt="馆藏作品">
+      <div class="cap"><b>Peng Yong 彭勇</b><br>一念三千 No.23-13<br>铝塑板丙烯 Acrylic on aluminium panel · 60×50cm · 2023</div>
+    </div>
+    <div class="col-item">
+      <img src="assets/col-4.jpg" alt="馆藏作品">
+      <div class="cap"><b>Collection Highlight</b><br>鹦鹉馆藏精选<br>限定馆藏展 · 鹦鹉的独白</div>
+    </div>
+  </div>
+
+  <div class="artists-wall">
+    <h3>Selected Collaborating Artists</h3>
+    <div class="zh-t">部分合作艺术家</div>
+    <div class="artist-names">
+      陈诺 · 阚诗祺 · 钱菁 · 叶帆 · 陈亦然 · 李戬 · 钱一如 · 圆大西 · 崔昱 · 李季纹 · 任若溪 · 岳柃君 · 邓思齐 · 李笑丹 · 沈之 · 张忠宇 · 顾文环 · 李颖颖 · 时天一 · 周宇越 · 韩京京 · 李琢恒 · 时砚亮 · 周子正 · 黄毛毛 · 李子玉 · 谭坤 · Florian Müller · 黄佩姗 · 梁冰 · 唐乾胜 · Hermine Curel-Sylvestre · 黄一晗 · 刘艺超 · 王嘉成 · Javier Mariscal · 黄渊青 · 龙炎 · 王鹏 · Kentaro Okumura · 黄喆君 · 陆霜 · 王信为 · Marie de Villepin · 金钕 · 茅矛 · 吴笛笛 · Rafoo Yang · 楷茳 · 毛钰慧 · 徐晓臻 · Valery Katsuba
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-top">
+    <div class="f-brand">
+      <div class="logo">The Parrot</div>
+      <div class="zh">鹦鹉艺术设计基金会</div>
+      <div class="script">Let life be inspiring</div>
+    </div>
+    <div class="f-cols">
+      <div class="f-col">
+        <h4>Explore 浏览</h4>
+        <a href="#about">About 关于</a>
+        <a href="#journey">Journey 历程</a>
+        <a href="#exhibitions">Exhibitions 展览</a>
+        <a href="#collection">Collection 馆藏</a>
+      </div>
+      <div class="f-col">
+        <h4>Foundation 基金会</h4>
+        <span>Parrot Art &amp; Design Foundation</span>
+        <span>Hong Kong · 2024</span>
+        <span>New York Liaison · 2025</span>
+      </div>
+      <div class="f-col">
+        <h4>Contact 联络</h4>
+        <span>Shanghai · Hong Kong · New York</span>
+      </div>
+    </div>
+  </div>
+  <div class="f-bottom">
+    <span>© 2026 THE PARROT · ART &amp; DESIGN FOUNDATION</span>
+    <span>灵感的存在 · 让生活充满灵感</span>
+  </div>
+</footer>
+
+<script>
+// mobile nav
+const navBurger = document.getElementById('navBurger');
+const navMobile = document.getElementById('navMobile');
+function closeMobileNav(){
+  navMobile.classList.remove('open');
+  document.body.classList.remove('nav-open');
+  navBurger.setAttribute('aria-expanded','false');
+}
+navBurger.addEventListener('click', () => {
+  const open = navMobile.classList.toggle('open');
+  document.body.classList.toggle('nav-open', open);
+  navBurger.setAttribute('aria-expanded', open);
+});
+
+// cover lock: on phones the site opens as a locked cover; the only way in is the ☰ menu
+function setCover(on){
+  document.body.classList.toggle('cover-mode', on);
+  if(on) scrollTo({top:0, behavior:'instant'});   // instant: cover must snap back, never glide
+}
+const isMobile = () => matchMedia('(max-width:900px)').matches;
+if(isMobile()) setCover(true);
+navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', e => {
+  if(!isMobile()){ closeMobileNav(); return; }   // desktop: default anchor behaviour
+  e.preventDefault();
+  closeMobileNav();
+  const href = a.getAttribute('href');
+  if(href === '#top'){ setCover(true); return; }
+  setCover(false);                                 // unlock, then enter the section
+  const t = document.querySelector(href);
+  if(t) setTimeout(() => t.scrollIntoView({behavior:'smooth'}), 80);
+}));
+document.querySelector('.nav-logo').addEventListener('click', e => {
+  if(isMobile()){ e.preventDefault(); setCover(true); }
+});
+
+// nav scroll state
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+// four-image hero carousel: autoplay, buttons, dots, and horizontal swipe/drag
+const hero = document.getElementById('top');
+const heroSlides = [...hero.querySelectorAll('.hero-slide')];
+const heroDots = [...hero.querySelectorAll('.hero-dot')];
+const heroReduce = matchMedia('(prefers-reduced-motion:reduce)');
+let heroIndex = 0;
+let heroTimer = null;
+let heroPointer = null;
+function showHero(next, restart = true){
+  heroIndex = ((next % heroSlides.length) + heroSlides.length) % heroSlides.length;
+  heroSlides.forEach((slide, i) => {
+    const active = i === heroIndex;
+    slide.classList.toggle('is-active', active);
+    slide.setAttribute('aria-hidden', String(!active));
+  });
+  heroDots.forEach((dot, i) => {
+    const active = i === heroIndex;
+    dot.classList.toggle('is-active', active);
+    if(active) dot.setAttribute('aria-current','true');
+    else dot.removeAttribute('aria-current');
+  });
+  if(restart) playHero();
+}
+function pauseHero(){
+  clearInterval(heroTimer);
+  heroTimer = null;
+}
+function playHero(){
+  pauseHero();
+  if(heroReduce.matches || document.hidden) return;
+  heroTimer = setInterval(() => showHero(heroIndex + 1, false), 4000);
+}
+hero.querySelector('.hero-prev').addEventListener('click', () => showHero(heroIndex - 1));
+hero.querySelector('.hero-next').addEventListener('click', () => showHero(heroIndex + 1));
+heroDots.forEach((dot, i) => dot.addEventListener('click', () => showHero(i)));
+const heroSwipe = document.getElementById('heroSlides');
+heroSwipe.addEventListener('dragstart', e => e.preventDefault());
+heroSwipe.addEventListener('pointerdown', e => {
+  if(e.pointerType === 'mouse' && e.button !== 0) return;
+  heroPointer = {x:e.clientX, y:e.clientY, id:e.pointerId};
+  heroSwipe.setPointerCapture(e.pointerId);
+  pauseHero();
+});
+heroSwipe.addEventListener('pointerup', e => {
+  if(!heroPointer || heroPointer.id !== e.pointerId) return;
+  const dx = e.clientX - heroPointer.x;
+  const dy = e.clientY - heroPointer.y;
+  heroPointer = null;
+  if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) showHero(heroIndex + (dx < 0 ? 1 : -1));
+  else playHero();
+});
+heroSwipe.addEventListener('pointercancel', () => { heroPointer = null; playHero(); });
+hero.addEventListener('mouseenter', pauseHero);
+hero.addEventListener('mouseleave', playHero);
+hero.addEventListener('keydown', e => {
+  if(e.key === 'ArrowLeft') showHero(heroIndex - 1);
+  if(e.key === 'ArrowRight') showHero(heroIndex + 1);
+});
+document.addEventListener('visibilitychange', () => document.hidden ? pauseHero() : playHero());
+playHero();
+
+// exhibition data
+const EX = {
+ 1:{img:'assets/ex-springrenewal.jpg',t:'Spiritual Presence: Spring Renewal',z:'灵性的存在 · 春焕',m:'2024 · Shanghai · Suhe Haus',
+    d:'「灵性的存在」系列首展，以植物为灵感，展开关于东方女性生命力、生态共生与跨文化感知的艺术实践。植物成为连接土地、身体与记忆的生命语言，象征女性在历史与现实中的生长力量。展览呈现当代女性力量的多重面貌：既扎根于土地与传统，也面向未来与世界。',
+    a:'阚诗祺 · 钱菁 · Javier Mariscal · Hermine Curel-Sylvestre · Mao Mao'},
+ 2:{img:'assets/ex-lighttraces.jpg',t:'Light Across Traces',z:'灵性的存在 · 越过痕迹的光',m:'2024 · Shanghai · 群展',
+    d:'年度女性主题「灵性的存在」第二展，由策展人徐文洁策划。女性看似柔软，实则坚韧 — 天生的敏感意味着更多挑战，却也拥有无限的灵性与光芒。即使刺痛，也能破茧成蝶：从各自创作角度出发，讲述女性如何越过支离破碎，直至痕迹凝固，不断生长、成为新的印记。',
+    a:'黄喆君 · 黄佩姗 · 岳柃君 · 任若溪 · 李颖颖'},
+ 3:{img:'assets/ex-garden1.jpg',t:'Garden of All Things I',z:'灵性的存在 · 万物花园',m:'2024 · Shanghai · 群展',
+    d:'"花园"不单是空间载体，更是万物相连的隐喻。艺术家以花园所象征的艺术纬度及女性视角为双向起点，回溯女性与自然、万物的链接，以生态女性主义视角重新审视女性与自然之间的隐喻关系，让女性能量在万物花园积极盛放、见证自我。',
+    a:'楷茳 · 周宇越 · 王信为 · 李季纹 · 梁冰 · 黄一晗 · Valery Katsuba · Kentaro Okumura'},
+ 4:{img:'assets/ex-realm.jpg',t:'Where Light Falls',z:'灵性的存在 · 光落之境',m:'2025 · Shanghai · 双年展首展',
+    d:'容器始终是女性与世界对话的隐秘语法。以"容器"为命题，延续对女性灵性的探索 — 容器不再是静态的客体，而是一种动态的语法：它是身体的延伸，是记忆的载体，是时间的褶皱，是光的居所，也是一次对女性灵性无限可能性的重新测绘。',
+    a:'王嘉成 · 龙炎 · 陈诺 · 钱一如 · 周子正 · 毛钰慧 · Rafoo Yang'},
+ 5:{img:'assets/ex-garden2.jpg',t:'Garden of All Things II',z:'灵性的存在 · 万物花园 II',m:'2025 · Shanghai · 光二仓库',
+    d:'深化「万物花园 I」提出的生态主题 — 从自然意象与沉浸式体验，转向"关系"本身：人与空间、人与植物、人与世间万物如何共同构成一个活生生的生态共同体。',
+    a:'叶帆 · 黄毛毛 · 陈诺 · 谭坤 · 陈亦然 · 金钕 · 张忠宇'},
+ 6:{img:'assets/ex-garden3.jpg',t:'Garden of All Things III',z:'灵性的存在 · 万物花园 III',m:'2025 · Shanghai · 系列 culmination',
+    d:'系列的总结与哲学升华 — 聚焦现象学的"之间性"概念：万物花园的"之间"，既是真实与虚拟的交汇处，也是万物生长的缝隙。当花朵溢出城市坚硬的边缘，花园已超越对花朵的简单陈列。',
+    a:'陈诺 · 陈亦然 · 胡晓文 · 金俊杰 · 钱一如 · 吴笛笛'},
+ 7:{img:'assets/ex-springcall.jpg',t:'Spring Call',z:'春唤 · 开幕展',m:'2023 · Shanghai · 外滩空间',
+    d:'外滩空间开幕展，The Parrot 迁入卜内门洋行历史建筑后的首个展览。',
+    a:'阚诗祺 · 钱菁 · Javier Mariscal · Hermine Curel-Sylvestre'},
+ 8:{img:'assets/ex-dreams.jpg',t:'Art Roaming Dreams',z:'艺游梦境',m:'2023 · Shanghai · 外滩空间',
+    d:'以外滩空间为载体，融合展览与论坛、签售、艺术活动、派对与晚宴，连接美术馆、拍卖行、品牌、明星及公众群体，形成兼具艺术展示、社交传播与文化协作功能的复合型平台。',
+    a:'群展 · 参展艺术家详见合作艺术家名录'},
+ 9:{img:'assets/ex-labyrinth.jpg',t:'Labyrinth · Meteorite',z:'迷楼 · 陨石：秩序与窥探的触觉',m:'2023 · Shanghai · 叶帆个展',
+    d:'凝聚艺术家叶帆对人与物、物与环境及生命自然关系的体察与反思。他发掘并善用环保材料，将思考与体验凝固于作品之中。《迷楼》呈现不同材料与关系的交织、混杂、解构与重组；《陨石》则如天外之物穿越大气，由完整渐趋残缺。增与减、赋予与消逝，在东方哲学的辩证观照下循环不息。',
+    a:'叶帆 Ye Fan'},
+ 10:{img:'assets/ex-metaphors.jpg',t:'Metaphors of Life',z:'生活的隐喻：用空间重新定义时间',m:'2023 · Shanghai · 外滩空间 · 年末群展',
+    d:'呈现法国艺术家 Marie de Villepin 的重要绘画作品。她成长于美国和印度，旅行、音乐与绘画构成了她早期艺术经验；创作受战后美国艺术家影响，尤其关注作品中的音乐性、自由感与精神超越性。由 The Parrot 主理人 Iris 策划。',
+    a:'Marie de Villepin · Valery Katsuba · 黄渊青 · 钱菁 · 吴笛笛'},
+ 11:{img:'assets/ex-summer.jpg',t:'You Are Forever the Summer of Freedom',z:'你永远是自由的夏天',m:'2024 · Shanghai · 群展',
+    d:'"我是一个绘画工作者，力图描绘人本身……如果观众能从我的作品中获取一些共鸣，我不甚荣幸。" — 邓思齐。刘艺超本能地描绘夏日美好的事物入画：花朵、树林、鹦鹉，人三三两两闲倚在草坪上 — 光与空气颤动的色彩机体，裹挟着夏日时间之流与回忆的色与温。',
+    a:'刘艺超 · 邓思齐 · 时砚亮'},
+ 12:{img:'assets/ex-ziyu.jpg',t:'As Water Flows, So Do Years',z:'似水流年 · 李子玉上海首展',m:'2024 · Shanghai · 卜内门洋行',
+    d:'与 Esther & Leo Studio 合作呈现。"时间是短暂的，艺术是永久的。" — 有观众评论子玉的画：心情好一点，着色就浅一些；心中有事，就深一点。然而从她的画中感受到的永远是一个五彩缤纷的世界，所有的虚伪皆被冲得一干二净。',
+    a:'李子玉 Li Ziyu'},
+ 13:{img:'assets/ex-lightwind.jpg',t:'Between Light and Wind',z:'光与风之间 · 邓思齐',m:'2024 · Shanghai · 个展',
+    d:'艺术家邓思齐擅长以松弛的笔触呈现人与人、人与自然之间的紧密交互。当光与风相遇的瞬间：灵性的光与自由的风交织。展览不提供确定的答案，却给予丰富的感知可能 — 在光与风交织的场域里，愿我们找回生命最初的轻盈。',
+    a:'邓思齐 Deng Siqi'},
+ 14:{img:'assets/col-2.jpg',t:'Solo of The Parrot',z:'鹦鹉的独白 · 限定馆藏展',m:'2024 · Limited Collection Exhibition',
+    d:'限定馆藏展，呈现 The Parrot 馆藏艺术家的作品 — 从抽象书法领军人物黄渊青，到作品被蓬皮杜艺术中心收藏的 Valery Katsuba，以及任教于中央戏剧学院的吴笛笛等。',
+    a:'Florian Müller · 黄渊青 · 圆大西 · 吴笛笛 · 钱菁 · 金钕 · 李戬 · 黄喆君 · 时砚亮 · 徐晓臻'},
+ 15:{img:'assets/ex-between-cover.webp',t:'Garden of All Things: Between',z:'万物花园 · 之间',m:'14 Sep — 31 Oct 2026 · Shanghai · The Belgian House',
+    d:'2026年9月14日，由鹦鹉艺术设计基金会主办的「灵性的存在」系列续作「万物花园·之间」于上海比利时之家启幕。展览以“之间”为核心命题，由徐文洁担任策展人，从户外自然花园延伸至室内艺术作品，以纺织、大漆、玻璃、丙烯、油画与综合装置，呈现人与自然、身体与精神、个体与世界之间流动而共生的生命叙事。',
+    a:'陈诺 · 陈彧凡 · 胡晓文 · 金俊杰 · 钱一如 · 吴笛笛',
+    g:[
+      'assets/ex-between-poster.webp',
+      'assets/ex-between-garden.webp',
+      'assets/ex-between-installation.webp',
+      'assets/ex-between-glass.webp',
+      'assets/ex-between-painting.webp',
+      'assets/ex-between-detail.webp'
+    ]},
+};
+
+// card clicks
+document.querySelectorAll('.ex-card').forEach(c => {
+  c.addEventListener('click', () => openEx(+c.dataset.ex));
+});
+function openEx(id){
+  const e = EX[id]; if(!e) return;
+  document.getElementById('exModalImg').src = e.img;
+  document.getElementById('exModalImg').alt = e.z + ' — exhibition view';
+  document.getElementById('exModalTitle').textContent = e.t;
+  document.getElementById('exModalZh').textContent = e.z;
+  document.getElementById('exModalMeta').textContent = e.m;
+  document.getElementById('exModalDesc').textContent = e.d;
+  document.getElementById('exModalArtists').textContent = e.a;
+  const gallery = document.getElementById('exModalGallery');
+  gallery.replaceChildren(...(e.g || []).map((src, i) => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = e.z + ' — ' + (i === 0 ? 'exhibition poster' : 'exhibition view ' + i);
+    img.loading = 'lazy';
+    if(src.includes('poster')) img.className = 'poster';
+    return img;
+  }));
+  gallery.classList.toggle('has-images', Boolean(e.g && e.g.length));
+  document.getElementById('exOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeEx(){
+  document.getElementById('exOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('exOverlay').addEventListener('click', e => {
+  if(e.target.id === 'exOverlay') closeEx();
+});
+addEventListener('keydown', e => { if(e.key === 'Escape') closeEx(); });
+
+// filters
+document.querySelectorAll('.pill').forEach(p => {
+  p.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    const f = p.dataset.filter;
+    document.querySelectorAll('.ex-card').forEach(c => {
+      const show = f === 'all' || c.dataset.cat === f;
+      c.classList.toggle('hidden', !show);
+      if(show && PB_MOBILE.matches && !PB_REDUCE.matches){
+        c.animate([
+          {opacity:0, transform:'translateY(10px)'},
+          {opacity:1, transform:'none'}
+        ], {duration:520, easing:'cubic-bezier(.45,0,.27,1)', fill:'both'});
+      }
+    });
+  });
+});
+
+// reveal on scroll (mobile: quiet opacity fades, Morgan-Lehman style)
+const PB_MOBILE = matchMedia('(max-width:900px)');
+const PB_REDUCE = matchMedia('(prefers-reduced-motion:reduce)');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if(en.isIntersecting){
+      en.target.style.opacity = 1;
+      en.target.style.transform = 'none';
+      io.unobserve(en.target);
+    }
+  });
+}, {threshold:.08});
+const pbObserve = (sel, fadeOnly) => document.querySelectorAll(sel).forEach((el, i) => {
+  if(PB_REDUCE.matches){
+    el.style.opacity = 1;
+    el.style.transform = 'none';
+    return;
+  }
+  el.style.opacity = 0;
+  el.style.transform = fadeOnly ? 'none' : 'translateY(24px)';
+  if(PB_MOBILE.matches){
+    el.style.transform = fadeOnly ? 'none' : 'translateY(14px)';
+    el.style.transition = fadeOnly
+      ? 'opacity .4s ease-in-out'
+      : 'opacity .4s ease-in-out, transform .8s cubic-bezier(.45,0,.27,1)';
+    el.style.transitionDelay = Math.min(i % 3, 2) * 55 + 'ms';
+  } else {
+    el.style.transition = fadeOnly ? 'opacity .6s ease-in-out' : 'opacity .8s ease, transform .8s ease';
+  }
+  io.observe(el);
+});
+pbObserve('.j-item, .ex-card, .ch-card, .ur-item, .col-item', false);
+if(PB_MOBILE.matches){
+  pbObserve('.about-figure, .herroom, .founder-grid, .ex-intro-img', true);
+  pbObserve('.section>.eyebrow, .section>.sec-head, .section>.sec-lede, .myth-cell, .ex-intro>div:last-child, .ex-series-title, .ex-filters, .artists-wall, .f-top', false);
+}
+
+// ----- gallery-style lightbox (mobile only; desktop keeps existing behaviour) -----
+const lb = document.createElement('div');
+lb.className = 'pb-lb';
+lb.innerHTML = '<button class="lb-close" aria-label="Close">Close ✕</button>' +
+  '<div class="lb-prev" aria-hidden="true">‹</div>' +
+  '<img alt="">' +
+  '<div class="lb-cap"></div><div class="lb-count"></div>' +
+  '<div class="lb-next" aria-hidden="true">›</div>';
+document.body.appendChild(lb);
+const lbImg = lb.querySelector('img'), lbCap = lb.querySelector('.lb-cap'), lbCount = lb.querySelector('.lb-count');
+const lbList = [...document.querySelectorAll('.section img')];
+let lbIdx = 0;
+function lbShow(i){
+  if(!lbList.length) return;
+  lbIdx = ((i % lbList.length) + lbList.length) % lbList.length;
+  const im = lbList[lbIdx];
+  lbImg.classList.remove('show');
+  lbImg.onload = () => requestAnimationFrame(() => lbImg.classList.add('show'));
+  lbImg.src = im.currentSrc || im.src;
+  const fig = im.closest('figure');
+  const cap = (fig && fig.querySelector('figcaption') ? fig.querySelector('figcaption').innerText.replace(/\n/g,' · ') : '') || im.alt || '';
+  lbCap.textContent = cap;
+  lbCount.textContent = (lbIdx + 1) + ' / ' + lbList.length;
+}
+function openLb(i){
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  lbShow(i);
+}
+function closeLb(){
+  lb.classList.remove('open');
+  lbImg.classList.remove('show');
+  document.body.style.overflow = '';
+}
+lb.querySelector('.lb-close').addEventListener('click', closeLb);
+lb.querySelector('.lb-prev').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx - 1); });
+lb.querySelector('.lb-next').addEventListener('click', e => { e.stopPropagation(); lbShow(lbIdx + 1); });
+lb.addEventListener('click', e => { if(e.target === lb) closeLb(); });
+let lbTouchX = null;
+lb.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, {passive:true});
+lb.addEventListener('touchend', e => {
+  if(lbTouchX === null) return;
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if(Math.abs(dx) > 40) lbShow(lbIdx + (dx < 0 ? 1 : -1));
+  lbTouchX = null;
+}, {passive:true});
+lbList.forEach((im, i) => {
+  im.addEventListener('click', e => {
+    if(!matchMedia('(max-width:900px)').matches) return;   // desktop: unchanged
+    e.stopPropagation();                                     // image tap = zoom; text tap = details
+    if(!im.src || im.naturalWidth === 0) return;
+    openLb(i);
+  });
+});
+addEventListener('keydown', e => { if(e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
